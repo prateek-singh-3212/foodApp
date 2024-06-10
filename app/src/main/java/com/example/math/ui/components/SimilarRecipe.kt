@@ -104,9 +104,3 @@ fun SimilarRecipe(
     }
 
 }
-
-@Preview
-@Composable
-fun SimilarRecipePreview() {
-//    SimilarRecipe()
-}

@@ -136,8 +136,3 @@ fun FullRecipe(
         }
     }
 }
-
-@Preview
-@Composable
-fun FullRecipePreview() {
-}
