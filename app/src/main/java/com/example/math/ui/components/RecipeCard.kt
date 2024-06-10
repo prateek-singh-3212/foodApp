@@ -88,6 +88,55 @@ fun RecipeCard(
     }
 }
 
+@Composable
+fun AdRecipeCard() {
+    Card(
+        modifier = Modifier
+            .height(100.dp)
+            .fillMaxWidth()
+            .padding(6.dp),
+        shape = RoundedCornerShape(14.dp),
+        border = BorderStroke(1.dp, SearchContainer)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.raw.das),
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(0.28f)
+                )
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(12.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Ad",
+                        color = Color.Black,
+                        maxLines = 1,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = "this is a ad",
+                        color = SearchText,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Preview
 @Composable
 fun RecipeCardPreview() {
@@ -97,4 +146,5 @@ fun RecipeCardPreview() {
         recipeName = "SSdasda",
         prepTime = "dsds"
     ) {}
+    AdRecipeCard()
 }

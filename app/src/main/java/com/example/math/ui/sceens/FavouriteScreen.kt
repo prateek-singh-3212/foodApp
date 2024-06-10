@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.math.ui.components.AdRecipeCard
 import com.example.math.ui.components.RecipeCard
 import com.example.math.viewmodel.FavoriteViewModel
 import com.example.network.data.RecipeData
@@ -25,7 +27,9 @@ fun FavouriteScreen(
     onRecipeClick: (Int) -> Unit
 ) {
     var favRecipeData by remember { mutableStateOf<List<RecipeData>>(emptyList()) }
-    favRecipeData = favoriteViewModel.getAllFavouriteRecipes()
+    LaunchedEffect(Unit) {
+        favRecipeData = favoriteViewModel.getAllFavouriteRecipes()
+    }
 
     Column(
         modifier = modifier
@@ -39,6 +43,9 @@ fun FavouriteScreen(
         )
         LazyColumn {
             items(favRecipeData.size) {
+                if (it%5 == 0) {
+                    AdRecipeCard()
+                }
                 favRecipeData[it].let { data ->
                     RecipeCard(
                         recipeId = data.id,

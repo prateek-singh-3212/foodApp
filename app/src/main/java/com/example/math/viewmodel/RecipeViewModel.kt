@@ -26,6 +26,10 @@ class RecipeViewModel(
     val recipeData = MutableLiveData<RecipeData>()
     val recipeError = MutableLiveData<String>()
 
+    val isAllDataLoading = MutableLiveData<Boolean>()
+    val allRecipeData = MutableLiveData<List<RecipeData>>()
+    val allRecipeError = MutableLiveData<String>()
+
     val similarRecipeData = MutableLiveData<List<SimilarRecipeData>>()
 
     fun fetchPopularRecipe(count: Int): Job {
@@ -42,6 +46,23 @@ class RecipeViewModel(
                 }
             }
             isPopularDataLoading.postValue(false)
+        }
+    }
+
+    fun fetchAllRecipe(count: Int): Job {
+        return viewModelScope.launch {
+            isAllDataLoading.postValue(true)
+            val response = repository.popularRecipe(count)
+            when(response) {
+                is Result.Success -> {
+                    val data = response.data as RecipeDataList
+                    allRecipeData.postValue(data.recipes)
+                }
+                is Result.Error -> {
+                    allRecipeError.postValue(response.exception)
+                }
+            }
+            isAllDataLoading.postValue(false)
         }
     }
 

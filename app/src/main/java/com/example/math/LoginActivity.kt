@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         binding.backGroundImage.setImageBitmap(bitmap)
 
         binding.loginButton.setOnClickListener {
-            foodSharedPreference.setString(Constants.TOKEN, "7b9a2a654e63489ea519ca4693cb37df")
+            foodSharedPreference.setString(Constants.TOKEN, "bf7f2fedcf244505affa303532014b2f")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

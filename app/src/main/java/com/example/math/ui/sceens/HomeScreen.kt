@@ -18,6 +18,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.math.ui.components.AdRecipeCard
 import com.example.math.ui.components.LoadingScreen
 import com.example.math.ui.components.PopularRecipeCard
 import com.example.math.ui.components.RecipeCard
@@ -44,20 +46,15 @@ fun HomeScreen(
     onRecipeClick: (Int) -> Unit,
     onSearchClick: () -> Unit
 ) {
-    var popularRecipeData by remember { mutableStateOf<List<RecipeData>>(emptyList()) }
-    var isLoading by remember { mutableStateOf<Boolean>(true) }
+    val popularRecipeData by recipeViewModel.popularRecipeData.observeAsState(emptyList())
+    val allRecipeData by recipeViewModel.allRecipeData.observeAsState(emptyList())
+    val isLoading by recipeViewModel.isPopularDataLoading.observeAsState(false)
+    val errorState by recipeViewModel.popularRecipeError.observeAsState()
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-    val observer = LocalLifecycleOwner.current
 
-    recipeViewModel.popularRecipeData.observe(observer) {
-        popularRecipeData = it
-    }
-    recipeViewModel.isPopularDataLoading.observe(observer) {
-        isLoading = it
-    }
-    recipeViewModel.popularRecipeError.observe(observer) {
-        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+    if (errorState != null) {
+        Toast.makeText(context, errorState, Toast.LENGTH_SHORT).show()
     }
 
     Column(
@@ -128,12 +125,15 @@ fun HomeScreen(
                 text = "All Recipes",
                 fontWeight = FontWeight.W700
             )
-            popularRecipeData.forEach{ data ->
+            allRecipeData.forEachIndexed { index, recipeData ->
+                if (index%5 == 0) {
+                    AdRecipeCard()
+                }
                 RecipeCard(
-                    recipeId = data.id,
-                    image = rememberAsyncImagePainter(data.image),
-                    recipeName = data.title,
-                    prepTime =  "Ready in ${data.readyInMinutes} min",
+                    recipeId = recipeData.id,
+                    image = rememberAsyncImagePainter(recipeData.image),
+                    recipeName = recipeData.title,
+                    prepTime =  "Ready in ${recipeData.readyInMinutes} min",
                     onClick = onRecipeClick
                 )
             }

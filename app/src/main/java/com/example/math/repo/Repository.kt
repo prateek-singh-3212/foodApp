@@ -2,6 +2,7 @@ package com.example.math.repo
 
 import android.util.Log
 import com.example.math.utils.Constants
+import com.example.math.utils.Constants.convertToErrorModel
 import com.example.math.utils.FoodSharedPreference
 import com.example.network.FoodAPIService
 import com.example.math.utils.Result
@@ -18,7 +19,7 @@ class Repository(
             if (result.isSuccessful) {
                 Result.success(result.body()!!)
             }else {
-                Result.error("Unable to Parse ${result.body()}")
+                Result.error(convertToErrorModel(result.errorBody()!!).message)
             }
         }catch (ex: Exception) {
             Log.e("apiError", ex.stackTraceToString())
@@ -33,7 +34,7 @@ class Repository(
             if (result.isSuccessful) {
                 Result.success(result.body()!!)
             }else {
-                Result.error("Unable to Parse ${result.body()}")
+                Result.error(convertToErrorModel(result.errorBody()!!).message)
             }
         }catch (ex: Exception) {
             Log.e("apiError", ex.stackTraceToString())
@@ -48,7 +49,7 @@ class Repository(
             if (result.isSuccessful) {
                 Result.success(result.body()!!)
             }else {
-                Result.error("Unable to Parse ${result.body()}")
+                Result.error(convertToErrorModel(result.errorBody()!!).message)
             }
         }catch (ex: Exception) {
             Log.e("apiError", ex.stackTraceToString())
@@ -64,7 +65,7 @@ class Repository(
             if (result.isSuccessful) {
                 Result.success(result.body()!!)
             } else {
-                Result.error("Unable to Parse ${result.body()}")
+                Result.error(convertToErrorModel(result.errorBody()!!).message)
             }
         } catch (ex: Exception) {
             Log.e("apiError", ex.stackTraceToString())
@@ -79,7 +80,7 @@ class Repository(
             if (result.isSuccessful) {
                 Result.success(result.body()!!)
             } else {
-                Result.error("Unable to Parse ${result.body()}")
+                Result.error(convertToErrorModel(result.errorBody()!!).message)
             }
         } catch (ex: Exception) {
             Log.e("apiError", ex.stackTraceToString())

@@ -35,7 +35,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        recipeViewModel.fetchPopularRecipe(2)
+        recipeViewModel.fetchPopularRecipe(3)
+        recipeViewModel.fetchAllRecipe(5)
         setContent {
             val navController = rememberNavController()
             MathTheme {

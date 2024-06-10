@@ -27,6 +27,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.math.ui.components.BasicInfo
 import com.example.math.ui.components.FullRecipe
@@ -170,6 +172,7 @@ fun SearchScreen(
                         showBottomSheet = false
                         recipeDetailState = 0
                         selectedResultState = null
+                        favouriteIconState = Icons.Default.FavoriteBorder
                     }
                 }
             },
@@ -200,12 +203,19 @@ fun SearchScreen(
                                         showBottomSheet = false
                                         recipeDetailState = 0
                                         selectedResultState = null
+                                        favouriteIconState = Icons.Default.FavoriteBorder
                                     }
                                 }
                             }) {
                                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
                             }
-                            Text(text = it.title)
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.6f),
+                                text = it.title,
+                                maxLines = 1,
+                                fontSize = 18.sp
+                            )
                             IconButton(onClick = {
                                 if (favoriteViewModel.isFavouriteRecipe(it.id)) {
                                     // Remove from favourite

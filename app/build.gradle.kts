@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.retrofit.lib)
     implementation(libs.coil)
     implementation(libs.gson)
+    implementation(libs.compose.livedata)
     implementation(project(":network"))
     implementation(libs.material)
     implementation(libs.androidx.appcompat)
